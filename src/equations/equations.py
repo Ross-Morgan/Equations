@@ -279,3 +279,7 @@ class Cubic(Equation):
 
     def solve(self):
         return solvers.solve(self.a, self.b, self.c, as_list=True)
+
+
+class Quartic(Equation): ...
+class Quintic(Equation): ...
