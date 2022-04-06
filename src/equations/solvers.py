@@ -24,15 +24,14 @@ def solve_linear(a0: list[real]):
 def solve(a: real, b: real, c: real = 0, d: real = 0, e: real = 0,
           *, as_list: bool = False) -> number:
     """
-    Solves equation for up to ≥2 real coefficients passed where a
+    Solves equation for ≥ 2 real coefficients passed
+    where `a = b ≠ 0`
     ---
     - @param a: number - [coefficient for x ≤ ⁴]
     - @param b: number - [coefficient for x ≤ ³]
     - @param c: number - [coefficient for x ≤ ²]
     - @param d: number - [coefficient for x ≤ ¹]
     - @param e: number - [coefficient for x ≤ ⁰]
-    ---
-
     """
 
     list_type = np.array
@@ -41,7 +40,6 @@ def solve(a: real, b: real, c: real = 0, d: real = 0, e: real = 0,
         list_type = list
 
     _assert_real(a, b, c, d, e)
-
 
     if e != 0:
         roots = fqs.quartic_roots([a, b, c, d, e])
@@ -54,6 +52,3 @@ def solve(a: real, b: real, c: real = 0, d: real = 0, e: real = 0,
     else:
         roots = [a]  # should never run
     return list_type(roots)
-
-
-print(solve(1, ))

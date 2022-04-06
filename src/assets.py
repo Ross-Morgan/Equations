@@ -1,7 +1,7 @@
-import sys
 import textwrap
-import yaml
 from typing import Callable, TypeVar
+
+import yaml
 
 __all__ = [
     "Assets",
@@ -70,11 +70,12 @@ class Assets:
 
         poly_box_container = """\
         QLabel {
-            background-color: 
+            background-color: black;
         }
         """
 
 
 # Unindent each member
 # This isn't necessary but makes reading output cleaner
+# TODO: Modify class to load each member from file
 modify_vars(Assets.Styles, textwrap.dedent)

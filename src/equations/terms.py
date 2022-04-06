@@ -28,8 +28,8 @@ quint_terms =  tuple[number, number, number, number, number, number]  # noqa
 patterns: dict[str, dict[str, re.Pattern] | re.Pattern] = {
     "coeff": re.compile(r"[+-]?\d*"),
     "Linear": {
-        "equation": re.compile(),
-        "terms": re.compile()
+        "equation": re.compile(r"(-?\d*x[+-]\d+)"),
+        "terms": re.compile(r"([+-]?\d*(x?))")
     },
     "Quadratic": {
         "equation": re.compile(r"(-?\d*)x(²)([+-]\d+)x([+-]\d+)"),
@@ -65,9 +65,9 @@ def sign_x3(c: number) -> str:
     @param c: number [Coefficient signed for x²]
     """
     if c not in [0, 1] and c > 0:
-        c = f"{c}x³"
+        c = f"+{c}x³"
     elif c == 1:
-        c = "x³"
+        c = "+x³"
     elif c == 0:
         c = ""
     elif c not in [0, -1] and c < 0:
@@ -102,7 +102,7 @@ def sign_n(c) -> str:
         return f"-{c}"
 
 
-def sign_linear_terms(a: number, b: number) -> linear_terms:
+def sign_linear_terms(a: number, b: number) -> tuple[str, str]:
     """
     Add positive/negative signs to terms and/or remove appropriately
 
@@ -116,7 +116,7 @@ def sign_linear_terms(a: number, b: number) -> linear_terms:
     return a, b
 
 
-def sign_quad_terms(a: number, b: number, c: number) -> quad_terms:
+def sign_quad_terms(a: number, b: number, c: number) -> tuple[str, str, str]:
     """
     Add positive/negative signs to terms and/or remove appropriately
 
@@ -133,7 +133,7 @@ def sign_quad_terms(a: number, b: number, c: number) -> quad_terms:
     return a, b, c
 
 
-def sign_cube_terms(a: number, b: number, c: number, d: number) -> cube_terms:
+def sign_cube_terms(a: number, b: number, c: number, d: number) -> tuple[str, str, str, str]:  # noqa
     """
     Add positive/negative signs to terms and/or remove appropriately
 
@@ -148,6 +148,8 @@ def sign_cube_terms(a: number, b: number, c: number, d: number) -> cube_terms:
     b = sign_x2(b)
     c = sign_x(c)
     d = sign_n(d)
+
+    return a, b, c, d
 
 
 def linear_coefficients(equation: str) -> linear_terms:
