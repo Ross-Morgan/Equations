@@ -138,7 +138,6 @@ def sign_cube_terms(a: number, b: number, c: number, d: number) -> tuple[str, st
     Add positive/negative signs to terms and/or remove appropriately
 
     ---
-
     - @param a: number [ax³ term]
     - @param b: number [bx² term]
     - @param c: number [cx term]
@@ -155,6 +154,7 @@ def sign_cube_terms(a: number, b: number, c: number, d: number) -> tuple[str, st
 def linear_coefficients(equation: str) -> linear_terms:
     """
     Return coefficients from linear equation
+
     ---
     - @param equation: str - [linear equation in form ax + b]
     """
