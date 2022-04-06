@@ -187,6 +187,7 @@ def quadratic_coefficients(equation: str) -> quad_terms:
 def cubic_coefficients(equation: str) -> cube_terms:
     """
     Return coefficients from cubic equation
+
     ---
     - @param equation: str [cubic equation in form ax³ + bx² + cx + d]
     """
@@ -214,6 +215,7 @@ def cubic_coefficients(equation: str) -> cube_terms:
 def quartic_coefficients(equation: str) -> quart_terms:
     """
     Return coefficients from cubic equation
+
     ---
     - @param equation: str [cubic equation in form ax³ + bx² + cx + d]
     """
