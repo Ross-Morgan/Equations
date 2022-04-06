@@ -158,11 +158,25 @@ def linear_coefficients(equation: str) -> linear_terms:
     ---
     - @param equation: str - [linear equation in form ax + b]
     """
+    equation.replace(" ", "")
+
+    # Find terms
+    a, b, *_ = patterns["Linear"]["terms"].findall(equation)
+
+    a = a[0]
+    b = b[0]
+
+    # Extract coefficients
+    a = numify(patterns["coeff"].findall(a)[0])
+    b = numify(patterns["coeff"].findall(b)[0])
+
+    return a, b
 
 
 def quadratic_coefficients(equation: str) -> quad_terms:
     """
     Return coefficients from cubic equation
+
     ---
     - @param equation: str - [quadratic equation in form ax² + bx + c]
     """
@@ -170,7 +184,7 @@ def quadratic_coefficients(equation: str) -> quad_terms:
     equation.replace(" ", "")
 
     # Find terms
-    a, b, c, *d = patterns["Quadratic"]["terms"].findall(equation)
+    a, b, c, *_ = patterns["Quadratic"]["terms"].findall(equation)
 
     a = a[0]
     b = b[0]
@@ -195,7 +209,7 @@ def cubic_coefficients(equation: str) -> cube_terms:
     equation.replace(" ", "")
 
     # Find terms
-    a, b, c, d, *e = patterns["Cubic"]["terms"].findall(equation)
+    a, b, c, d, *_ = patterns["Cubic"]["terms"].findall(equation)
 
     # Get first from each group
     a = a[0]
@@ -223,7 +237,7 @@ def quartic_coefficients(equation: str) -> quart_terms:
     equation.replace(" ", "")
 
     # Find terms
-    a, b, c, d, e, *f = patterns["Quartic"]["terms"].findall(equation)
+    a, b, c, d, e, *_ = patterns["Quartic"]["terms"].findall(equation)
 
     # Get first from each group
     a = a[0]
