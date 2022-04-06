@@ -1,0 +1,5 @@
+size: [640, 480]
+title: Play with Polynomials
+icon: ../assets/formula.png
+default-boxes: 3
+default-const: x
