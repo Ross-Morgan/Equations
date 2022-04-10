@@ -1,5 +1,7 @@
 import re
 
+import numpy
+
 __all__ = [
     "sign_x3",
     "sign_x2",
@@ -151,6 +153,19 @@ def sign_cube_terms(a: number, b: number, c: number, d: number) -> tuple[str, st
     return a, b, c, d
 
 
+def sign_quart_terms(a: number, b: number, c: number, d: number, e:number) -> tuple[str, str, str, str, str]:  # noqa
+    """
+    Add positive/negative signs to terms and/or remove appropriately
+
+    ---
+    - @param : number [ax term]
+    - @param : number [bx³ term]
+    - @param : number [cx² term]
+    - @param : number [dx term]
+    - @param : number [e term]
+    """
+
+
 def linear_coefficients(equation: str) -> linear_terms:
     """
     Return coefficients from linear equation
@@ -254,3 +269,6 @@ def quartic_coefficients(equation: str) -> quart_terms:
     e = numify(patterns["coeff"].findall(e)[0])
 
     return a, b, c, d, e
+
+
+numpy.array().shape
