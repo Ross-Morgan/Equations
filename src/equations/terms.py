@@ -1,11 +1,7 @@
 import re
 
-import numpy
-
 __all__ = [
-    "sign_x3",
-    "sign_x2",
-    "sign_x",
+    "sign_xn",
     "sign_n",
 
     "sign_quad_terms",
@@ -62,42 +58,30 @@ def numify(num: str) -> number:
     return f(num)
 
 
-def sign_x3(c: number) -> str:
-    """
-    @param c: number [Coefficient signed for x²]
-    """
-    if c not in [0, 1] and c > 0:
-        c = f"+{c}x³"
-    elif c == 1:
-        c = "+x³"
-    elif c == 0:
-        c = ""
-    elif c not in [0, -1] and c < 0:
-        c = f"-{c}x³"
-    elif c == -1:
-        c = "-x³"
-
-    return c
-
-
-def sign_x2(c) -> str:
-    """
-    @param c: number [Coefficient signed for x²]
-    """
-    return sign_x3(c).replace("³", "²")
-
-
-def sign_x(c) -> str:
+def sign_xn(c, coeff: str = "") -> str:
     """
     @param c: number [Coefficient signed for x]
     """
-    return sign_x3(c).replace("³", "")
+    if c not in [0, 1] and c > 0:
+        c = f"+{c}x{coeff}"
+    elif c == 1:
+        c = f"+x{coeff}"
+    elif c == 0:
+        c = ""
+    elif c not in [0, -1] and c < 0:
+        c = f"-{c}x{coeff}"
+    elif c == -1:
+        c = f"-x{coeff}"
+
+    return c
 
 
 def sign_n(c) -> str:
     """
     @param c: number [Coefficient signed for n]
     """
+    if c == 0:
+        return ""
     if c >= 0:
         return f"+{c}"
     else:
@@ -112,7 +96,7 @@ def sign_linear_terms(a: number, b: number) -> tuple[str, str]:
     - @param a: number [ax term]
     - @param b: number [b term]
     """
-    a = sign_x(a)
+    a = sign_xn(a)
     b = sign_n(b)
 
     return a, b
@@ -128,8 +112,8 @@ def sign_quad_terms(a: number, b: number, c: number) -> tuple[str, str, str]:
     - @param b: number [bx term]
     - @param c: number [c term]
     """
-    a = sign_x2(a)
-    b = sign_x(b)
+    a = sign_xn(a, "²")
+    b = sign_xn(b)
     c = sign_n(c)
 
     return a, b, c
@@ -145,9 +129,9 @@ def sign_cube_terms(a: number, b: number, c: number, d: number) -> tuple[str, st
     - @param c: number [cx term]
     - @param d: number [d term]
     """
-    a = sign_x3(a)
-    b = sign_x2(b)
-    c = sign_x(c)
+    a = sign_xn(a, "³")
+    b = sign_xn(b, "²")
+    c = sign_xn(c)
     d = sign_n(d)
 
     return a, b, c, d
@@ -158,12 +142,17 @@ def sign_quart_terms(a: number, b: number, c: number, d: number, e:number) -> tu
     Add positive/negative signs to terms and/or remove appropriately
 
     ---
-    - @param : number [ax term]
+    - @param : number [ax⁴ term]
     - @param : number [bx³ term]
     - @param : number [cx² term]
     - @param : number [dx term]
     - @param : number [e term]
     """
+    a = sign_xn(a, "⁴")
+    b = sign_xn(b, "³")
+    c = sign_xn(c, "²")
+    d = sign_xn(d)
+    e = sign_n(e)
 
 
 def linear_coefficients(equation: str) -> linear_terms:
@@ -173,10 +162,13 @@ def linear_coefficients(equation: str) -> linear_terms:
     ---
     - @param equation: str - [linear equation in form ax + b]
     """
+    cls = "Linear"
+
+    # Remove all whitespace for regularity
     equation.replace(" ", "")
 
     # Find terms
-    a, b, *_ = patterns["Linear"]["terms"].findall(equation)
+    a, b, *_ = patterns[cls]["terms"].findall(equation)
 
     a = a[0]
     b = b[0]
@@ -195,11 +187,13 @@ def quadratic_coefficients(equation: str) -> quad_terms:
     ---
     - @param equation: str - [quadratic equation in form ax² + bx + c]
     """
+    cls = "Quadratic"
+
     # Remove all whitespace for regularity
     equation.replace(" ", "")
 
     # Find terms
-    a, b, c, *_ = patterns["Quadratic"]["terms"].findall(equation)
+    a, b, c, *_ = patterns[cls]["terms"].findall(equation)
 
     a = a[0]
     b = b[0]
@@ -220,11 +214,13 @@ def cubic_coefficients(equation: str) -> cube_terms:
     ---
     - @param equation: str [cubic equation in form ax³ + bx² + cx + d]
     """
+    cls = "Cubic"
+
     # Remove all whitespace for regularity
     equation.replace(" ", "")
 
     # Find terms
-    a, b, c, d, *_ = patterns["Cubic"]["terms"].findall(equation)
+    a, b, c, d, *_ = patterns[cls]["terms"].findall(equation)
 
     # Get first from each group
     a = a[0]
@@ -248,11 +244,13 @@ def quartic_coefficients(equation: str) -> quart_terms:
     ---
     - @param equation: str [cubic equation in form ax³ + bx² + cx + d]
     """
+    cls = "Quartic"
+
     # Remove all whitespace for regularity
     equation.replace(" ", "")
 
     # Find terms
-    a, b, c, d, e, *_ = patterns["Quartic"]["terms"].findall(equation)
+    a, b, c, d, e, *_ = patterns[cls]["terms"].findall(equation)
 
     # Get first from each group
     a = a[0]
@@ -269,6 +267,3 @@ def quartic_coefficients(equation: str) -> quart_terms:
     e = numify(patterns["coeff"].findall(e)[0])
 
     return a, b, c, d, e
-
-
-numpy.array().shape

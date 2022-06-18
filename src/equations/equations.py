@@ -19,10 +19,11 @@ __all__ = [
     "Equation",
 ]
 
-number = int | float | complex
 real = int | float
+number = real | complex
 
-T_co = TypeVar("T_co", "Linear", "Quadratic", "Cubic", covariant=True)
+T_co = TypeVar("T_co", "Linear", "Quadratic", "Cubic", "Quartic",
+               covariant=True)
 
 
 class Equation(ABC):

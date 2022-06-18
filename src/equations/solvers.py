@@ -25,7 +25,7 @@ def solve(a: real, b: real, c: real = 0, d: real = 0, e: real = 0,
           *, as_list: bool = False) -> number:
     """
     Solves equation for ≥ 2 real coefficients passed
-    where `a = b ≠ 0`
+    where `a ≠ 0`
     ---
     - @param a: number - [coefficient for x ≤ ⁴]
     - @param b: number - [coefficient for x ≤ ³]
